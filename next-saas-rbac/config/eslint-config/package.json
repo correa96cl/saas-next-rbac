@@ -11,5 +11,9 @@
     "@rocketseat/eslint-config": "^2.2.2",
     "@saas/prettier": "*",
     "eslint-plugin-simple-import-sort": "^12.1.0"
+  },
+  "prettier": "@saas/prettier",
+  "eslintConfig": {
+    "extends": ["@saas/eslint-config"]
   }
 }
