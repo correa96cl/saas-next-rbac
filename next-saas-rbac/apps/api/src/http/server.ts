@@ -2,11 +2,12 @@ import { fastify } from 'fastify'
 import fastifyCors from '@fastify/cors'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUI from '@fastify/swagger-ui'
+import { env } from '@saas/env'
 import {
-    jsonSchemaTransform,
-    serializerCompiler,
-    validatorCompiler,
-    ZodTypeProvider
+  jsonSchemaTransform,
+  serializerCompiler,
+  validatorCompiler,
+  ZodTypeProvider
 } from 'fastify-type-provider-zod'
 import { createAccount } from './routes/auth/create-account'
 import { authenticateWithPassword } from './routes/auth/auth-with-password'
@@ -25,23 +26,32 @@ app.setValidatorCompiler(validatorCompiler)
 app.setErrorHandler(errorHandler)
 
 app.register(fastifySwagger, {
-    openapi: {
-      info: {
-        title: 'Next.js SaaS',
-        description: 'Full-stack SaaS with multi-tenant & RBAC.',
-        version: '1.0.0',
-      },
-      servers: [],
+  openapi: {
+    info: {
+      title: 'Next.js SaaS',
+      description: 'Full-stack SaaS with multi-tenant & RBAC.',
+      version: '1.0.0',
     },
-    transform: jsonSchemaTransform,
-  })
-  
-  app.register(fastifySwaggerUI, {
-    routePrefix: '/docs',
-  })
+    servers: [],
+    components:{
+      securitySchemes: {
+        bearerAuth:{
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        }
+      }
+    }
+  },
+  transform: jsonSchemaTransform,
+})
+
+app.register(fastifySwaggerUI, {
+  routePrefix: '/docs',
+})
 
 app.register(fastifyJwt, {
-  secret: 'my-jwt-secret',
+  secret: env.JWT_SECRET,
 
 })
 
@@ -54,6 +64,6 @@ app.register(requestPasswordRecover)
 app.register(resetPassword)
 app.register(authenticateWithGithub)
 
-app.listen({ port: 3333 }).then(() => {
-    console.log('HTTP server running')
+app.listen({ port: env.SERVER_PORT }).then(() => {
+  console.log('HTTP server running')
 })
