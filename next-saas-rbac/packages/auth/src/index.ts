@@ -16,6 +16,8 @@ import { z } from 'zod'
 export * from './models/organization'
 export * from './models/user'
 export * from './models/project'
+export * from './roles'
+
 
 
 //type AppAbilities = UserSubjects | ProjectSubjects | ['manage', 'all']
