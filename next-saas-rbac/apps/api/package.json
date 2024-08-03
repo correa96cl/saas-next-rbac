@@ -30,8 +30,8 @@
         "@saas/prettier": "*",
         "@saas/tsconfig": "*",
         "@types/node": "^20.14.9",
-        "prisma": "^5.16.1",
         "dotenv-cli": "^7.4.2",
+        "prisma": "^5.17.0",
         "tsx": "^4.16.2"
     },
     "prettier": "@saas/prettier",
