@@ -32,6 +32,8 @@ import { updateProject } from './routes/projets/update-project'
 import { getMembers } from './routes/members/get-members'
 import { updateMembers } from './routes/members/update-members'
 import { removeMembers } from './routes/members/remove-mambers'
+import { register } from 'module'
+import { createInvite } from './routes/invites/create-invite'
 
 
 
@@ -94,6 +96,7 @@ app.register(updateProject)
 app.register(getMembers)
 app.register(updateMembers)
 app.register(removeMembers)
+app.register(createInvite)
 
 app.listen({ port: env.SERVER_PORT }).then(() => {
   console.log('HTTP server running')

@@ -79,6 +79,20 @@ export async function createInvite(app: FastifyInstance) {
             throw new BadRequestError('Member with same e-mail already belongs to your organization.')
         }
 
+        const invite = await prisma.invite.create({
+            data: {
+                email,
+                //authorId: userId,
+                userId: userId,
+                role,
+                organizationId: organization.id
+            }
+        })
+
+        return reply.status(201).send({
+            inviteId: invite.id
+        })
+
     }
     )
 }
