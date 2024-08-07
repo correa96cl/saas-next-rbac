@@ -4,7 +4,6 @@ import { z } from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
-import { createSlug } from '@/utils/create-slug'
 import { getUserPermissions } from '@/utils/get-user-permissions'
 import { UnauthorizedError } from '../_errors/unauthorized-error'
 import { roleSchema } from '@saas/auth'
@@ -82,8 +81,7 @@ export async function createInvite(app: FastifyInstance) {
         const invite = await prisma.invite.create({
             data: {
                 email,
-                //authorId: userId,
-                userId: userId,
+                authorId: userId,
                 role,
                 organizationId: organization.id
             }
