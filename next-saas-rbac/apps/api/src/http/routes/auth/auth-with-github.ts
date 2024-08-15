@@ -1,10 +1,8 @@
 import { prisma } from "@/lib/prisma";
-import { compare } from "bcryptjs";
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod"
 import { BadRequestError } from "../_errors/bad-request-error";
-import en from "zod/locales/en.js";
 import { env } from "@saas/env";
 
 export async function authenticateWithGithub(app: FastifyInstance) {
@@ -109,7 +107,10 @@ export async function authenticateWithGithub(app: FastifyInstance) {
             }
         })
 
+        console.log(`token : `,token)
+
         return reply.status(201).send({ token })
+
 
 
     })
