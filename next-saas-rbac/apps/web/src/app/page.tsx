@@ -1,8 +1,9 @@
+import { auth } from "@/auth/auth";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 
-export default function Home() {
-  return (
-    < Button>Pressione se acha a Renata mal-carater e BURRRAA</Button>
-  );
+export default async function Home() {
+
+  const {user} = await auth()
+   
+    return <pre>{JSON.stringify(user, null, 2)}</pre>
 }

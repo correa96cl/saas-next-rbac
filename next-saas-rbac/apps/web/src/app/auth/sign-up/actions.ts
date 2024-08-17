@@ -6,16 +6,22 @@ import { cookies } from 'next/headers'
 
 import { signInWithPassword } from "@/http/sign-in-with-password"
 import { redirect } from 'next/navigation'
+import { SignUp } from '@/http/sign-up'
 
 
-const signInSchema = z.object({
+const signUpSchema = z.object({
+    name: z.string().refine(value => value.split(' ').length > 1, { message: 'Please, provide your full name' }),
     email: z.string().email({ message: 'Please, provide a valid e-mail address ' }),
-    password: z.string().min(1, { message: 'Please, provide a valid password' }),
+    password: z.string().min(6, { message: 'Password should be at least 6 characters' }),
+    password_confirmation: z.string(),
+}).refine(data => data.password === data.password_confirmation, {
+    message: 'Passwords do not match',
+    path: ['password_confirmation'],
 })
 
 
-export async function signInWithEmailAndPassword(data: FormData) {
-    const result = signInSchema.safeParse(Object.fromEntries(data))
+export async function signUpAction(data: FormData) {
+    const result = signUpSchema.safeParse(Object.fromEntries(data))
 
     if (!result.success) {
         const errors = result.error.flatten().fieldErrors
@@ -24,16 +30,13 @@ export async function signInWithEmailAndPassword(data: FormData) {
         return { success: false, message: null, errors }
     }
 
-    const { email, password } = result.data
+    const { name, email, password } = result.data
 
 
     try {
-        const { token } = await signInWithPassword({ email, password, })
+        await SignUp({ name,email, password, })
 
-        cookies().set('token', token, {
-            path: '/',
-            maxAge: 60 * 60 * 24 * 7, // 7 days
-        })
+
 
     } catch (err) {
 
