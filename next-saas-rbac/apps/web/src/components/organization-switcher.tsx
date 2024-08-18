@@ -13,10 +13,11 @@ import {
 } from './ui/dropdown-menu'
 import { getOrganizations } from '@/http/get-organizations'
 import { cookies } from 'next/headers'
+import { getCurrentOrg } from '@/auth/auth'
 
 export async function OrganizationSwitcher() {
 
-    const currentOrg = cookies().get('orgId')?.value
+    const currentOrg = getCurrentOrg()
     const { organizations } = await getOrganizations()
 
     const currentOrganization = organizations.find((org) => org.slug === currentOrg)
