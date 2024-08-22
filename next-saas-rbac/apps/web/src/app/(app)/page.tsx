@@ -1,12 +1,15 @@
 import { auth } from "@/auth/auth";
-import Header from "@/components/header";
+import {Header} from "../../components/header";
 import { Button } from "@/components/ui/button";
 
 export default async function Home() {
 
-return (
-  <div className="py-4">
-    <Header/>
-  </div>
-)
+  return (
+    <div className="space-y-4 py-4">
+      <Header />
+      <main className="mx-auto w-full max-w-[1200px] space-y-4">
+        <p className="text-sm text-muted-foreground">Select an organization</p>
+      </main>
+    </div>
+  )
 }
