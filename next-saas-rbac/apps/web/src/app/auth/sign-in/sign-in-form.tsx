@@ -11,12 +11,14 @@ import githubIcon from "@/app/assets/github-icon.svg";
 import { AlertTriangle, Loader2 } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { useFormState } from '@/hooks/use-form-state'
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { signInWithGithub } from "../actions"
 
 export function FormSignIn() {
 
     const router = useRouter()
+    const searchParams = useSearchParams()
+
 
     const [{ success, message, errors }, handleSubmit, isPending] =
         useFormState(signInWithEmailAndPassword, () => {
@@ -39,7 +41,12 @@ export function FormSignIn() {
 
                 <div className="space-y-1">
                     <Label htmlFor="email">E-mail</Label>
-                    <Input name="email" type="text" id="email" />
+                    <Input
+            name="email"
+            type="email"
+            id="email"
+            defaultValue={searchParams.get('email') ?? ''}
+          />
 
                     {errors?.email && (
                         <p className="text=xs font-medium text-red-500 dark:text-red-400">{errors.email[0]}</p>

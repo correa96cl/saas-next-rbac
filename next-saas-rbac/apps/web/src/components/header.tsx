@@ -7,6 +7,7 @@ import { ability } from "@/auth/auth";
 import { Separator } from "@radix-ui/react-separator";
 import { ThemeSwitcher } from "./theme/theme-switcher";
 import { ProjectSwitcher } from "./project-switcher";
+import { PendingInvites } from "./pending-invites";
 export async function Header(){
 
     const permissions = await ability()
@@ -29,9 +30,12 @@ export async function Header(){
             <Slash className="size-3 -rotate-[24deg] text-border" />
             <ProjectSwitcher />
           </>
+
             </div>
 
             <div className="flex items-center gap-4">
+            <PendingInvites />
+
                 <ThemeSwitcher/>
                 <Separator orientation="vertical" className="h-5"/>
                 <ProfileButton/>
